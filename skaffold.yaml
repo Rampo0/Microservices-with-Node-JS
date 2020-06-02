@@ -1,0 +1,58 @@
+apiVersion : skaffold/v2alpha3
+kind : Config
+deploy :
+    kubectl :
+        manifests:
+            - ./infra/kubernetes/*
+build :
+    local :
+        push : false
+    artifacts :
+        - image : rampooco/client
+          context : client
+          docker :
+            dockerfile : Dockerfile
+          sync :
+            manual :
+                - src : 'src/**/*.js'
+                  dest : .
+        - image : rampooco/comments
+          context : comments
+          docker :
+            dockerfile : Dockerfile
+          sync :
+            manual :
+                - src : '*.js'
+                  dest : .
+        - image : rampooco/posts
+          context : posts
+          docker :
+            dockerfile : Dockerfile
+          sync :
+            manual :
+                - src : '*.js'
+                  dest : .
+        - image : rampooco/event-bus
+          context : event-bus
+          docker :
+            dockerfile : Dockerfile
+          sync :
+            manual :
+                - src : '*.js'
+                  dest : .
+        - image : rampooco/query
+          context : query
+          docker :
+            dockerfile : Dockerfile
+          sync :
+            manual :
+                - src : '*.js'
+                  dest : .
+        - image : rampooco/moderation
+          context : moderation
+          docker :
+            dockerfile : Dockerfile
+          sync :
+            manual :
+                - src : '*.js'
+                  dest : .
